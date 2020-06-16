@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Home
+{% endblock title  %}
+
+
+{% block content %}
+
+{% include 'includes/navbar.html' with active_tab="home" %}
+
+<div class="container" style="margin-top: 100px; text-align: center;">
+    <h1>View Time Table</h1><br>
+    <form action="{% url 'show_timetable' %}" method="get">
+        <div class="form-group col-md-2 offset-5">
+            <label for="sem">Select the semester</label>
+            <select class="form-control" name="sem" id="sem">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Show Time-Table</button>
+    </form>
+    <br>
+
+    {% if not request.user.is_superuser %}
+
+
+    <div class="row">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg col-5" data-toggle="modal" data-target="#modelId">
+            Faculty Login
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Faculty Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <form action="{% url 'faculty_login' %}" method="POST" class="col-6 offset-3">
+                                {% csrf_token %}
+                                <input class="form-control" type="text" name="username" id="username"
+                                    placeholder="Faculty ID"> <br>
+                                <button type="submit" class="btn btn-primary">Log In</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $('#exampleModal').on('show.bs.modal', event => {
+                var button = $(event.relatedTarget);
+                var modal = $(this);
+                // Use above variables to manipulate the DOM
+
+            });
+        </script>
+        <a name="" id="" class="btn btn-primary btn-lg col-5 offset-2" href="{% url 'admin_login' %}"
+            role="button">Admin Login</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
