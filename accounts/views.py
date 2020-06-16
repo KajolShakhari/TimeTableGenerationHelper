@@ -7,8 +7,6 @@ from timetable.models import TimeTable
 
 
 def home(request):
-    if request.session.get("faculty_id"):
-        return redirect("faculty_page")
     return render(request, "home.html")
 
 
